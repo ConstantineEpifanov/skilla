@@ -1,7 +1,30 @@
-
+import { useEffect, useLayoutEffect } from 'react';
+import { useGetListMutation } from '../../store/skilla/skilla.api';
+import { useActions } from '../../hooks/actions';
+import Table from '../Table';
+import './Main.scss';
+import { CallSelect } from '../CallSelect';
+import DateFilter from '../DateFilter';
 
 export default function Main() {
-    return (
-        <></>
-    );
+  const [getList, { data }] = useGetListMutation();
+
+  const { setList } = useActions();
+
+  useLayoutEffect(() => {
+    getList({});
+  }, []);
+
+  useEffect(() => {
+    setList(data?.results);
+  }, [data]);
+
+  return (
+    <main className="main">
+      <div className="main__filters">
+        <CallSelect /> <DateFilter />
+      </div>
+      <Table />
+    </main>
+  );
 }

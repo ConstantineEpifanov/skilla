@@ -1,0 +1,138 @@
+@import '../../utils/variables.scss';
+
+.table {
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 5px rgba(233, 237, 243, 1);
+  width: 100%;
+  border-spacing: 0 0;
+  table-layout: fixed;
+  border: none;
+  text-align: left;
+  border-left: 40px solid transparent;
+  border-right: 40px solid transparent;
+
+  &__header-row {
+  }
+
+  &__header-item {
+    font-weight: 400;
+    color: $text-secondary;
+    opacity: 0.87;
+    border-bottom: rgba(234, 240, 250, 1) 1px solid;
+    padding: 24px 0 20px;
+
+    &_type {
+      width: 54px;
+    }
+
+    &_date {
+      width: 88px;
+    }
+
+    &_avatar {
+      width: 129px;
+    }
+
+    &_tel {
+      width: 325px;
+    }
+
+    &_source {
+      width: 214px;
+    }
+
+    &_rating {
+      width: 461px;
+    }
+
+    &_duration {
+      min-width: 88px;
+    }
+  }
+
+  &__item {
+    padding: 15px 0;
+    font-size: 15px;
+    border-bottom: rgba(234, 240, 250, 1) 1px solid;
+    border-collapse: collapse;
+    vertical-align: middle;
+
+    &-avatar {
+      width: 32px;
+      aspect-ratio: 1;
+      object-fit: scale-down;
+    }
+
+    &-row {
+      color: $text-primary;
+
+      &:hover {
+        background-color: rgba(212, 223, 243, 0.17);
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__body {
+  }
+
+  &__date-divider {
+    position: relative;
+    margin: 40px 0 16px;
+
+    &-number {
+      position: absolute;
+      top: 0;
+      right: -2px;
+      font-size: 12px;
+      line-height: 12px;
+    }
+
+    &-text {
+      color: $text-primary;
+      margin: 0;
+      padding: 0;
+    }
+  }
+}
+
+audio {
+  /*border-radius: 90px;*/
+  width: 250px;
+  height: 45px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+audio::-webkit-media-controls-mute-button {
+  display: none !important;
+}
+
+audio::-webkit-media-controls-panel {
+  background-color: rgba(234, 240, 250, 0.99);
+}
+
+// audio::-webkit-media-controls-play-button {
+// background-image: url('../../assets/icons/Start.svg');
+// }
+
+// audio::-webkit-media-controls.state-playing::-webkit-media-controls-play-button {
+//     background-image: url('../../assets/icons/Pause.svg');
+// }
+
+audio::-webkit-media-controls-time-remaining-display {
+  display: none !important;
+}
+
+audio::-webkit-media-controls-volume-slider {
+  display: none !important;
+}
+
+audio::-webkit-media-controls-volume-control-container.closed {
+  display: none !important;
+}
+audio::-webkit-media-controls-volume-control-container {
+  display: none !important;
+}

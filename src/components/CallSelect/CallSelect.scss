@@ -1,0 +1,44 @@
+@import '../../utils/variables.scss';
+
+.react-select {
+  display: flex;
+  gap: 16px;
+
+  &__button {
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    cursor: pointer;
+    text-align: start;
+  }
+
+  &__control {
+    cursor: pointer;
+    min-height: auto;
+    outline: none;
+  }
+
+  &__menu-list {
+    background-color: $background-secondary;
+    display: flex;
+    flex-direction: column;
+    width: 133px;
+    box-shadow: 0 4px 20px $shadow;
+    border-radius: 8px;
+  }
+
+  &__option {
+    color: $text-secondary;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $hover;
+    }
+  }
+
+  &__single-value {
+    color: $contrast;
+  }
+}

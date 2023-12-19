@@ -1,0 +1,18 @@
+@import url('./assets/fonts/fonts.css');
+@import './utils/variables.scss';
+@import './assets/fonts/normalize.css';
+
+:root {
+  font-family: SF-Pro-Display, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-size: 14px;
+
+  color: $text-secondary;
+  background-color: $background-primary;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
