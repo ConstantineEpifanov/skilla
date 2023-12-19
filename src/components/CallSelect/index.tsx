@@ -8,6 +8,7 @@ import {
   useGetListMutation,
 } from '../../store/skilla/skilla.api';
 import { useActions } from '../../hooks/actions';
+import { useOutsideClick } from '../../hooks/useOutsideClick';
 
 export const CallSelect = () => {
   const [state, setState] = useState({ id: 'all', label: 'Все типы' });
@@ -15,6 +16,11 @@ export const CallSelect = () => {
   const { setList } = useActions();
   const [getCallsList] = useGetCallsListMutation();
   const [getList] = useGetListMutation();
+
+  const ref = useOutsideClick(() => {
+    setIsOpen(!isOpen);
+    console.log('click outside');
+  });
 
   const options = [
     { id: 'all', label: 'Все типы' },
@@ -46,7 +52,7 @@ export const CallSelect = () => {
   };
 
   return (
-    <div className="call-select">
+    <div className="call-select" ref={ref}>
       <button
         className={`call-select__button ${
           state.id !== 'all' && 'call-select__button_active'
