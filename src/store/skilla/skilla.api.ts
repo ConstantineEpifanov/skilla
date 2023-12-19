@@ -13,7 +13,16 @@ export const api = createApi({
         method: 'POST',
       }),
     }),
+    getCallsList: build.mutation({
+      query: (in_out: string) => ({
+        url: `getList`,
+        method: 'POST',
+        params: {
+          in_out,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useGetListMutation } = api;
+export const { useGetListMutation, useGetCallsListMutation } = api;

@@ -1,44 +1,60 @@
 @import '../../utils/variables.scss';
 
-.react-select {
+.call-select {
   display: flex;
-  gap: 16px;
+  flex-direction: row;
+  gap: 10px;
+  position: relative;
 
   &__button {
-    padding: 0;
+    display: flex;
     border: none;
-    font: inherit;
-    color: inherit;
     background-color: transparent;
     cursor: pointer;
-    text-align: start;
-  }
-
-  &__control {
-    cursor: pointer;
-    min-height: auto;
-    outline: none;
-  }
-
-  &__menu-list {
-    background-color: $background-secondary;
-    display: flex;
-    flex-direction: column;
-    width: 133px;
-    box-shadow: 0 4px 20px $shadow;
-    border-radius: 8px;
-  }
-
-  &__option {
     color: $text-secondary;
-    cursor: pointer;
+    padding: 0;
+    gap: 8px;
+    align-items: center;
+
+    &_active {
+      color: $contrast;
+    }
 
     &:hover {
-      background-color: $hover;
+      opacity: 0.8;
     }
   }
 
-  &__single-value {
-    color: $contrast;
+  &__list {
+    width: 133px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    list-style: none;
+    padding: 0;
+    margin-top: 2px;
+    background-color: $background-secondary;
+    box-shadow: 0 4px 20px $shadow;
+    border-radius: 8px;
+    z-index: 1;
+    gap: 7;
+    overflow: hidden;
+
+    &-item {
+      cursor: pointer;
+      padding: 7px 12px;
+      color: $text-primary;
+      font-family: SF-Compact-Display, Arial, Helvetica, sans-serif;
+      font-weight: 400;
+      font-size: 12px;
+
+      &_active {
+        color: $contrast;
+      }
+
+      &:hover {
+        background-color: $hover;
+      }
+    }
   }
 }

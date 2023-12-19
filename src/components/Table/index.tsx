@@ -6,7 +6,6 @@ import { TableRows } from '../TableRows';
 
 export default function Table() {
   const dataList = useSelector((state: RootState) => state.skilla.list);
-  console.log(dataList);
 
   return (
     <table className="table">
@@ -16,10 +15,7 @@ export default function Table() {
           <th className="table__header-item table__header-item_date">
             <div className="table__header-item-time-sort">
               Время
-              <button
-                className="table__header-item-time-sort-btn"
-                onClick={() => console.log('sort')}
-              ></button>
+              <button className="table__header-item-time-sort-btn"></button>
             </div>
           </th>
           <th className="table__header-item table__header-item_avatar">

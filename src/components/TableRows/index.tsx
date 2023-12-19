@@ -67,7 +67,7 @@ export const TableRows: FC<{
   const renderRows = (item: TableItem) => (
     <tr key={item.id} className="table__item-row">
       <td className="table__item">
-        {item.in_out === 0 ? <InCall /> : <OutCall />}
+        {item.in_out === 1 ? <InCall /> : <OutCall />}
       </td>
       <td className="table__item">{trimDate(item.date)}</td>
       <td className="table__item">
@@ -83,7 +83,9 @@ export const TableRows: FC<{
       {/* <td className='table__item'>{item.time !== 0 ? <><audio controls>
                 <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg" />
             </audio> <p>{item.time}:00</p></> : ''}</td> */}
-      <td className="table__item">{item.time}</td>
+      <td className="table__item">
+        {item.time !== 0 ? `${item.time}:00` : ''}
+      </td>
     </tr>
   );
 
@@ -91,29 +93,27 @@ export const TableRows: FC<{
     <>
       {todayList && todayList.map((item) => renderRows(item))}
 
-      {yesterdayList && (
+      {yesterdayList && yesterdayList.length !== 0 && (
         <>
-          {' '}
           <div className="table__date-divider">
             <p className="table__date-divider-text">Вчера</p>
             <span className="table__date-divider-number">
               {yesterdayList.length}
             </span>
-          </div>{' '}
-          {yesterdayList.map((item) => renderRows(item))}{' '}
+          </div>
+          {yesterdayList.map((item) => renderRows(item))}
         </>
       )}
 
       {elseList && elseList.length !== 0 && (
         <>
-          {' '}
           <div className="table__date-divider">
             <p className="table__date-divider-text">Ранее</p>
             <span className="table__date-divider-number">
               {elseList.length}
             </span>
-          </div>{' '}
-          {elseList.map((item) => renderRows(item))}{' '}
+          </div>
+          {elseList.map((item) => renderRows(item))}
         </>
       )}
     </>
