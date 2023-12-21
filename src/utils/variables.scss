@@ -6,6 +6,8 @@ $background-secondary: rgb(255, 255, 255);
 $hover: rgba(222, 228, 255, 1);
 $shadow: rgba(0, 0, 0, 0.08);
 $contrast: rgba(31, 70, 251, 1);
+$arrows-color: rgba(173, 191, 223, 1);
+$arrows-contrast: rgba(0, 44, 251, 1);
 
 // Шрифты
 $font-family: 'Onest', Arial, sans-serif;
@@ -15,3 +17,6 @@ $main-margin: 40px 160px 140px;
 $main-margin-mobile: 40px 20px;
 $main-margin-tablet: 20px 100px;
 $desktop-gap: 140px;
+
+// Курсор
+$pointer: url('../../assets/icons/cursor-pointer.svg'), pointer;

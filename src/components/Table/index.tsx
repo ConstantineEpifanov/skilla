@@ -1,11 +1,52 @@
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
-
 import './Table.scss';
 import { TableRows } from '../TableRows';
+import { useState } from 'react';
+import { useGetSortedListMutation } from '../../store/skilla/skilla.api';
+import { useActions } from '../../hooks/actions';
+import { Arrow } from '../../assets/icons/Arrow';
+import { RootState } from '../../store';
+import { useSelector } from 'react-redux';
 
 export default function Table() {
-  const dataList = useSelector((state: RootState) => state.skilla.list);
+  const [sortOrderByTime, setSortOrderByTime] = useState<'ASC' | 'DESC'>('ASC');
+  const [sortOrderByDuration, setSortOrderByDuration] = useState<
+    'ASC' | 'DESC'
+  >('ASC');
+  const { setList } = useActions();
+  const [getSortedList] = useGetSortedListMutation();
+  const dateFilterState = useSelector((state: RootState) => state.dateFilter);
+  const callFilterState = useSelector((state: RootState) => state.callFilter);
+
+  function handleSortByTime() {
+    setSortOrderByTime(sortOrderByTime === 'ASC' ? 'DESC' : 'ASC');
+    getSortedList({
+      order: sortOrderByTime,
+      sort_by: 'date',
+      date_start: dateFilterState.date_start,
+      date_end: dateFilterState.date_end,
+      in_out: callFilterState.id,
+    })
+      .unwrap()
+      .then((data) => {
+        setList(data?.results);
+        console.log(data?.results);
+      });
+  }
+  function handleSortByDuration() {
+    setSortOrderByDuration(sortOrderByDuration === 'ASC' ? 'DESC' : 'ASC');
+    getSortedList({
+      date_start: dateFilterState.date_start,
+      date_end: dateFilterState.date_end,
+      in_out: callFilterState.id,
+      order: sortOrderByDuration,
+      sort_by: 'duration',
+    })
+      .unwrap()
+      .then((data) => {
+        setList(data?.results);
+        console.log(data?.results);
+      });
+  }
 
   return (
     <table className="table">
@@ -13,9 +54,14 @@ export default function Table() {
         <tr className="table__header-row">
           <th className="table__header-item table__header-item_type">Тип</th>
           <th className="table__header-item table__header-item_date">
-            <div className="table__header-item-time-sort">
+            <div className="table__header-item-sort">
               Время
-              <button className="table__header-item-time-sort-btn"></button>
+              <button
+                className="table__header-item-sort-btn"
+                onClick={() => handleSortByTime()}
+              >
+                <Arrow direction={sortOrderByTime === 'ASC' ? '0' : '180deg'} />
+              </button>
             </div>
           </th>
           <th className="table__header-item table__header-item_avatar">
@@ -29,12 +75,22 @@ export default function Table() {
             Оценка
           </th>
           <th className="table__header-item table__header-item_duration">
-            Длительность
+            <div className="table__header-item-sort table__header-item-sort_justify-end">
+              Длительность
+              <button
+                className="table__header-item-sort-btn"
+                onClick={() => handleSortByDuration()}
+              >
+                <Arrow
+                  direction={sortOrderByDuration === 'ASC' ? '0' : '180deg'}
+                />
+              </button>
+            </div>
           </th>
         </tr>
       </thead>
       <tbody className="table__body">
-        <TableRows dataList={dataList} />
+        <TableRows />
       </tbody>
     </table>
   );

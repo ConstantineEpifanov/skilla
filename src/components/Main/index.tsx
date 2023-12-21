@@ -4,7 +4,7 @@ import { useActions } from '../../hooks/actions';
 import Table from '../Table';
 import './Main.scss';
 import { CallSelect } from '../CallSelect';
-import DateFilter from '../DateFilter';
+import { DateSelect } from '../DateSelect';
 
 export default function Main() {
   const [getList, { data }] = useGetListMutation();
@@ -22,7 +22,7 @@ export default function Main() {
   return (
     <main className="main">
       <div className="main__filters">
-        <CallSelect /> <DateFilter />
+        <CallSelect /> <DateSelect />
       </div>
       <Table />
     </main>

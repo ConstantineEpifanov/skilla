@@ -10,11 +10,6 @@
   table-layout: fixed;
   border: none;
   text-align: left;
-  border-left: 40px solid transparent;
-  border-right: 40px solid transparent;
-
-  &__header-row {
-  }
 
   &__header-item {
     font-weight: 400;
@@ -22,6 +17,14 @@
     opacity: 0.87;
     border-bottom: rgba(234, 240, 250, 1) 1px solid;
     padding: 24px 0 20px;
+
+    &:first-child {
+      border-left: 40px solid transparent;
+    }
+
+    &:last-child {
+      padding-right: 40px;
+    }
 
     &_type {
       width: 54px;
@@ -44,11 +47,34 @@
     }
 
     &_rating {
-      width: 461px;
+      width: 150px;
     }
 
     &_duration {
-      min-width: 88px;
+      width: 100%;
+    }
+
+    &-sort {
+      display: flex;
+      align-items: center;
+      flex-wrap: nowrap;
+      gap: 8px;
+
+      &_justify-end {
+        justify-content: end;
+      }
+    }
+    &-sort-btn {
+      cursor: $pointer;
+      background-color: transparent;
+      border: none;
+
+      &:hover {
+        opacity: 0.8;
+        & svg {
+          fill: $arrows-contrast;
+        }
+      }
     }
   }
 
@@ -59,10 +85,29 @@
     border-collapse: collapse;
     vertical-align: middle;
 
+    &:first-child {
+      border-left: 40px solid transparent;
+    }
+
+    &:last-child {
+      padding-right: 40px;
+    }
+
     &-avatar {
       width: 32px;
       aspect-ratio: 1;
       object-fit: scale-down;
+    }
+
+    &-record {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+
+      &-audio {
+        display: none;
+        max-height: 40px;
+      }
     }
 
     &-row {
@@ -70,22 +115,23 @@
 
       &:hover {
         background-color: rgba(212, 223, 243, 0.17);
-        cursor: pointer;
+        cursor: $pointer;
+      }
+
+      &:hover .table__item .table__item-record .table__item-record-audio {
+        display: block;
       }
     }
   }
 
-  &__body {
-  }
-
   &__date-divider {
     position: relative;
-    margin: 40px 0 16px;
+    margin: 40px 0 16px 40px;
 
     &-number {
       position: absolute;
       top: 0;
-      right: -2px;
+      right: 5%;
       font-size: 12px;
       line-height: 12px;
     }

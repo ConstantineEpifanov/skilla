@@ -1,10 +1,17 @@
 @import '../../utils/variables.scss';
 
-.call-select {
+.date-select {
   display: flex;
   flex-direction: row;
   gap: 10px;
   position: relative;
+
+  &__wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    cursor: $pointer;
+  }
 
   &__button {
     display: flex;

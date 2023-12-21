@@ -1,25 +1,23 @@
 import { useState } from 'react';
 import './CallSelect.scss';
 
-import { ArrowDown } from '../../assets/icons/ArrowDown';
+import { Arrow } from '../../assets/icons/Arrow';
 import { Cross } from '../../assets/icons/Cross';
-import {
-  useGetCallsListMutation,
-  useGetListMutation,
-} from '../../store/skilla/skilla.api';
+import { useGetListMutation } from '../../store/skilla/skilla.api';
 import { useActions } from '../../hooks/actions';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 
 export const CallSelect = () => {
-  const [state, setState] = useState({ id: 'all', label: 'Все типы' });
+  const callFilterState = useSelector((state: RootState) => state.callFilter);
   const [isOpen, setIsOpen] = useState(false);
-  const { setList } = useActions();
-  const [getCallsList] = useGetCallsListMutation();
+  const { setList, setCallFilter } = useActions();
+
   const [getList] = useGetListMutation();
 
   const ref = useOutsideClick(() => {
-    setIsOpen(!isOpen);
-    console.log('click outside');
+    setIsOpen(false);
   });
 
   const options = [
@@ -29,38 +27,35 @@ export const CallSelect = () => {
   ];
 
   const handleItemClick = (id: string, label: string) => {
-    setState({ id, label });
+    setCallFilter({ id, label });
     setIsOpen(false);
-    getCallsList(id).then((res) => {
-      if ('data' in res) {
-        setList(res.data.results);
-      } else {
-        console.log(res);
-      }
-    });
+    getList({ in_out: id })
+      .unwrap()
+      .then((data) => {
+        setList(data?.results);
+      });
   };
 
   const handleResetFilters = () => {
-    setState({ id: 'all', label: 'Все типы' });
-    getList({}).then((res) => {
-      if ('data' in res) {
-        setList(res.data.results);
-      } else {
-        console.log(res);
-      }
-    });
+    setCallFilter({ id: 'all', label: 'Все типы' });
+
+    getList({})
+      .unwrap()
+      .then((data) => {
+        setList(data?.results);
+      });
   };
 
   return (
     <div className="call-select" ref={ref}>
       <button
         className={`call-select__button ${
-          state.id !== 'all' && 'call-select__button_active'
+          callFilterState.id !== 'all' && 'call-select__button_active'
         }`}
         type="button"
         onClick={() => setIsOpen(!isOpen)}
       >
-        {state.label} <ArrowDown />
+        {callFilterState.label} <Arrow />
       </button>
 
       {isOpen && (
@@ -70,7 +65,7 @@ export const CallSelect = () => {
               key={id}
               id={id}
               className={`call-select__list-item ${
-                state.id === id && 'call-select__list-item_active'
+                callFilterState.id === id && 'call-select__list-item_active'
               }`}
               onClick={() => handleItemClick(id, label)}
             >
@@ -80,7 +75,7 @@ export const CallSelect = () => {
         </ul>
       )}
 
-      {state.id !== 'all' && (
+      {callFilterState.id !== 'all' && (
         <button
           className="call-select__button"
           type="button"
