@@ -29,7 +29,6 @@ export default function Table() {
       .unwrap()
       .then((data) => {
         setList(data?.results);
-        console.log(data?.results);
       });
   }
   function handleSortByDuration() {
@@ -44,7 +43,6 @@ export default function Table() {
       .unwrap()
       .then((data) => {
         setList(data?.results);
-        console.log(data?.results);
       });
   }
 

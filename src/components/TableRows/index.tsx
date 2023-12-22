@@ -25,7 +25,6 @@ export const TableRows = () => {
 
   useEffect(() => {
     filterByDate(dataList);
-    console.log(dataList);
   }, [dataList]);
 
   const fixTelNumber = (tel: string) => {
