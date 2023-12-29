@@ -100,7 +100,11 @@ export const TableRows = () => {
     <tr
       key={item.id}
       className="table__item-row"
-      onClick={() => handleRecordClick(item.record, item.partnership_id)}
+      onMouseEnter={
+        item.record
+          ? () => handleRecordClick(item.record, item.partnership_id)
+          : () => {}
+      }
     >
       <td className="table__item">
         {item.in_out === 1 ? <InCall /> : <OutCall />}
