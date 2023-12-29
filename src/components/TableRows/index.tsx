@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 
 import avatar from '../../assets/icons/avatar.svg';
-// import { useGetRecordMutation } from '../../store/skilla/skilla.api';
+import { useGetRecordMutation } from '../../store/skilla/skilla.api';
 
 export const TableRows = () => {
   const dataList = useSelector((state: RootState) => state.skilla.list);
@@ -17,7 +17,8 @@ export const TableRows = () => {
   const [yesterdayList, setYesterdayList] = useState<TableItem[]>([]);
   const [elseList, setElseList] = useState<TableItem[]>([]);
 
-  // const [getRecord, { data: recordData }] = useGetRecordMutation();
+  const [getRecord, { data: mp3Blob }] = useGetRecordMutation();
+  const mp3Url = mp3Blob ? URL.createObjectURL(mp3Blob) : null;
 
   const today = new Date();
   const yesterday = new Date();
@@ -26,6 +27,14 @@ export const TableRows = () => {
   useEffect(() => {
     filterByDate(dataList);
   }, [dataList]);
+
+  useEffect(() => {
+    return () => {
+      if (mp3Url) {
+        URL.revokeObjectURL(mp3Url);
+      }
+    };
+  }, [mp3Url]);
 
   const fixTelNumber = (tel: string) => {
     if (tel) {
@@ -83,12 +92,16 @@ export const TableRows = () => {
     );
   }
   // Получение ссылки на запись
-  // function handleRecordClick(record: string, partnership_id: string) {
-  //   getRecord({ record, partnership_id })
-  // }
+  function handleRecordClick(record: string, partnership_id: string) {
+    getRecord({ record, partnership_id });
+  }
 
   const renderRows = (item: TableItem) => (
-    <tr key={item.id} className="table__item-row">
+    <tr
+      key={item.id}
+      className="table__item-row"
+      onClick={() => handleRecordClick(item.record, item.partnership_id)}
+    >
       <td className="table__item">
         {item.in_out === 1 ? <InCall /> : <OutCall />}
       </td>
@@ -104,15 +117,14 @@ export const TableRows = () => {
       <td className="table__item">{item.source}</td>
       <td className="table__item">{getRating(item.status)}</td>
       <td className="table__item">
-        {item.time !== 0 && (
+        {item.record && (
           <div className="table__item-record">
-            <audio controls className="table__item-record-audio">
-              <source
-                src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-                type="audio/mpeg"
-              />
-            </audio>
-            <p>{formatCallTime(item.time)}</p>{' '}
+            {mp3Url && (
+              <audio controls className="table__item-record-audio">
+                <source src={mp3Url} type="audio/mpeg" />
+              </audio>
+            )}
+            <p>{formatCallTime(item.time)}</p>
           </div>
         )}
       </td>

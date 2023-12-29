@@ -57,6 +57,7 @@ export const api = createApi({
           'Content-Type':
             'audio/mpeg, audio/x-mpeg, audio/x-mpeg-3, audio/mpeg3',
         },
+        responseHandler: (response: Response) => response.blob(),
       }),
     }),
   }),
